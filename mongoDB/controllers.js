@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-const models = require("../mongoDB/models");
+import models from "../mongoDB/models.js";
 
 const addNewUserAsync = async (req, res, next) => {
     
@@ -26,8 +26,6 @@ const addNewUser = (username, done) => {
     }
 };
 
-// export { addNewUser } --Not working?
-// Exports.
-module.exports = {
-    addNewUser
-};
+// Exports
+export { addNewUser };
+export default { addNewUser };

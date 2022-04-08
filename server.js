@@ -1,19 +1,19 @@
 "use strict";
 
-// import express from "express"; --- Cannot use?
-const express = require('express');
-const app = express()
-const cors = require('cors')
-require('dotenv').config()
-const mongoose = require('mongoose');
+import express from "express";
+const app = express();
+import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
+import mongoose from 'mongoose';
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true, useUnifiedTopology: true
 });
 
-const { Schema } = require('mongoose')
-const bodyParser = require("body-parser")
-const mongoDbControllers = require("./mongoDB/controllers");
+import  Schema  from 'mongoose';
+import bodyParser from "body-parser";
+import controllers from "./mongoDB/controllers.js";
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors())
@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 app.post("/api/users", (req, res) => {
   console.log(req.body.username);
-  mongoDbControllers.addNewUser(req.body.username, (err, done) => {
+  controllers.addNewUser(req.body.username, (err, done) => {
     if(err) {
       console.error(err);
     } else {
