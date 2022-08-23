@@ -1,7 +1,8 @@
 ﻿"use strict";
 
 import mongoose from "mongoose";
-const { Schema } = mongoose;
+
+const {Schema} = mongoose;
 
 // Schemas
 const NewUserSchema = new Schema({
@@ -10,10 +11,30 @@ const NewUserSchema = new Schema({
         required: true
     }
 })
+const NewExerciseLogSchema = new Schema({
+    userId: {
+        type: mongoose.Types.ObjectId,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    duration: {
+        type: Number,
+        required: true
+    },
+    date: {
+        type: String,
+        required: true
+    }
+})
+
 
 // Models
 const NewUser = mongoose.model("user", NewUserSchema)
+const NewExerciseLog = mongoose.model("exerciseLog", NewExerciseLogSchema);
 
 // Exports
-export { NewUser };
-export default { NewUser };
+export {NewUser, NewExerciseLog};
+export default {NewUser, NewExerciseLog};
