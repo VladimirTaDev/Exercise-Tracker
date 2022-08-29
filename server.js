@@ -1,6 +1,6 @@
 "use strict";
 //temp del
-import models, {NewExerciseLog} from "./mongoDB/models.js";
+import models, {NewExerciseLog, NewUser} from "./mongoDB/models.js";
 //Temp del
 
 import express from "express";
@@ -42,13 +42,22 @@ app.post("/api/users", (req, res) => {
     });
 });
 
+app.get("/api/users", (req, res) => {
+    controllers.findAllUsers((err, done) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(done);
+        }
+    })
+});
+
 app.post("/api/users/:_id/exercises", (req, res) => {
     // T03:24:00 
     const date = new Date(req.body.date)
-    console.log(date.toDateString());
+    //console.log(date.toDateString());
     controllers.addNewExerciseLog(req.params._id, req.body.description, req.body.duration, date.toDateString(), (err, done) => {
         if (err) {
-            console.error(err);
             res.send(err);
         } else {
             res.send(done);

@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-import models, {NewExerciseLog} from "../mongoDB/models.js";
+import models, {NewExerciseLog, NewUser} from "../mongoDB/models.js";
 import mongoose from "mongoose";
 
 const addNewUser = (username, done) => {
@@ -21,12 +21,14 @@ const addNewUser = (username, done) => {
     }
 };
 
-const addNewExerciseLog = async(_id, description, duration, date, done) => {
+const addNewExerciseLog = async (_id, description, duration, date, done) => {
     try {
         const userExists = await models.NewUser.exists({ _id: _id});
-        //if (userExists) { console.log("userExists")}
+        if (userExists === null) {
+            return done("Error: user does not exists");
+        }
     } catch (err) {
-        return done("User does not exists")
+        return done(err)
     }
     
     if (description !== "" && duration !== undefined && date !== undefined) {
@@ -46,10 +48,20 @@ const addNewExerciseLog = async(_id, description, duration, date, done) => {
             }
         })
     } else {
-        return done("Data is invalid")
+        return done("Error: data is invalid")
+    }
+}
+
+const findAllUsers = async (done) => {
+    try {
+        const allUsers = await models.NewUser.find({});
+        return done(null, allUsers);
+
+    } catch (err) {
+        return done("Error retrieving all users")
     }
 }
 
 // Exports
-export {addNewUser, addNewExerciseLog};
-export default {addNewUser, addNewExerciseLog};
+export {addNewUser, addNewExerciseLog, findAllUsers};
+export default {addNewUser, addNewExerciseLog, findAllUsers};
