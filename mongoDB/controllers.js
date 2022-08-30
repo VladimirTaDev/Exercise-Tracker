@@ -22,10 +22,14 @@ const addNewUser = (username, done) => {
 };
 
 const addNewExerciseLog = async (_id, description, duration, date, done) => {
+    let username = "";
+    
     try {
-        const userExists = await models.NewUser.exists({ _id: _id});
+        const userExists = await models.NewUser.findById({ _id: _id});
         if (userExists === null) {
             return done("Error: user does not exists");
+        } else {
+            username = userExists.username;
         }
     } catch (err) {
         return done(err)
@@ -44,7 +48,14 @@ const addNewExerciseLog = async (_id, description, duration, date, done) => {
             if (err) {
                 return done(err);
             } else {
-                done(null, data);
+                let returnDataFormatted = {
+                    username: username,
+                    _id: _id,
+                    description: data["_doc"].description,
+                    duration: data["_doc"].duration,
+                    date: data["_doc"].date,
+                };
+                done(null, returnDataFormatted);
             }
         })
     } else {
