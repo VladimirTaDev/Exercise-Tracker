@@ -27,6 +27,10 @@ const NewExerciseLogSchema = new Schema({
     date: {
         type: String,
         required: true
+    },
+    dateMilliseconds: {
+        type: Number,
+        required: true
     }
 })
 
