@@ -2,7 +2,7 @@
 
 My freeCodeCamp.org - Back End Development and APIs Final Project.
 
-# [Run on replit](https://replit.com/@VladimirTa/)
+# [Run on replit](https://replit.com/@VladimirTa/Exercise-Tracker)
 
 # Example Usage:
 Create a New User:
