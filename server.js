@@ -1,8 +1,4 @@
 "use strict";
-//temp del
-import models, {NewExerciseLog, NewUser} from "./mongoDB/models.js";
-//Temp del
-
 import express from "express";
 
 const app = express();
@@ -30,7 +26,8 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/index.html')
 });
 
-app.post("/api/users", (req, res) => {
+app.route("/api/users")
+    .post((req, res) => {
     controllers.addNewUser(req.body.username, (err, done) => {
         if (err) {
             console.error(err);
@@ -38,9 +35,8 @@ app.post("/api/users", (req, res) => {
             res.send(done);
         }
     });
-});
-
-app.get("/api/users", (req, res) => {
+})
+    .get((req, res) => {
     controllers.findAllUsers((err, done) => {
         if (err) {
             res.send(err);
